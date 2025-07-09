@@ -43,3 +43,18 @@ router.get('/test', (req, res) => {
 });
 
 module.exports = router;
+
+const Reservation = require('../models/Reservation'); // ⬅️ à ajouter en haut si ce n’est pas fait
+
+// 🔎 Voir toutes les réservations pour un catway donné (admin)
+router.get('/:id/reservations', auth, async (req, res) => {
+  try {
+    const catwayId = req.params.id;
+
+    const reservations = await Reservation.find({ catway: catwayId }).populate('user', 'username email');
+    res.json(reservations);
+  } catch (err) {
+    console.error('❌ Erreur récupération réservations :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+});

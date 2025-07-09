@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<h2>Créer un compte</h2>
+
+<% if (error) { %>
+  <p style="color:red;"><%= error %></p>
+<% } %>
+
+<form action="/users/register" method="POST">
+  <label>Nom d'utilisateur :</label><br>
+  <input type="text" name="username" required><br>
+
+  <label>Email :</label><br>
+  <input type="email" name="email" required><br>
+
+  <label>Mot de passe :</label><br>
+  <input type="password" name="password" required><br><br>
+
+  <button type="submit">S'inscrire</button>
+</form>

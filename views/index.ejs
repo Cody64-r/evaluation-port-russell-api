@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<h2>Bienvenue sur le Port de Plaisance Russell 🚤</h2>
+
+<% if (user) { %>
+  <p>👋 Bonjour <%= user.username %> !</p>
+
+  <ul>
+    <li><a href="/reservations">🗓️ Voir mes réservations</a></li>
+    <li><a href="/reservations/new">➕ Réserver un catway</a></li>
+    <li><a href="/catways">📋 Liste des catways</a></li>
+    <% if (user.email === 'admin@port.fr') { %>
+      <li><a href="/admin">⚙️ Espace administrateur</a></li>
+    <% } %>
+  </ul>
+
+<% } else { %>
+  <p>Veuillez vous connecter pour accéder aux fonctionnalités.</p>
+  <p>
+    <a href="/login">Connexion</a> | 
+    <a href="/register">Créer un compte</a>
+  </p>
+<% } %>
+
+<%- include('partials/footer') %>

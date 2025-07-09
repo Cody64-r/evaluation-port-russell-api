@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<h2>👮 Tableau de bord – Administrateur</h2>
+
+<h3>👤 Utilisateurs inscrits</h3>
+<ul>
+  <% users.forEach(u => { %>
+    <li>
+      🧑 <strong><%= u.username %></strong> — <%= u.email %>
+    </li>
+  <% }) %>
+</ul>
+
+<hr>
+
+<h3>🗓️ Réservations enregistrées</h3>
+<table border="1" cellpadding="6" cellspacing="0" style="width: 100%;">
+  <thead style="background-color: #f2f2f2;">
+    <tr>
+      <th>Utilisateur</th>
+      <th>Catway</th>
+      <th>Emplacement</th>
+      <th>Date</th>
+      <th>Durée (jours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reservations.forEach(r => { %>
+      <tr>
+        <td><%= r.user?.username || '❓' %></td>
+        <td><%= r.catway?.name || '❌' %></td>
+        <td><%= r.catway?.location || '❌' %></td>
+        <td><%= new Date(r.date).toLocaleDateString('fr-FR') %></td>
+        <td><%= r.duration %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<p style="margin-top: 2rem;"><a href="/">← Retour à l'accueil</a></p>
+
+<%- include('partials/footer') %>

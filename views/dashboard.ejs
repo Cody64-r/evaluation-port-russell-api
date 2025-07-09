@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<h2>Tableau de bord</h2>
+<p>Bonjour <%= user.username %> !</p>
+<p>Date : <%= date %></p>
+
+<h3>Vos réservations :</h3>
+<ul>
+  <% reservations.forEach(r => { %>
+    <li>
+      <strong><%= r.catway.name %></strong> – 
+      le <%= new Date(r.date).toLocaleDateString() %> pendant <%= r.duration %> jour(s)
+      <form action="/reservations/<%= r._id %>?_method=DELETE" method="POST" style="display:inline">
+        <button type="submit">Annuler ❌</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('partials/footer') %>

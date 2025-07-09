@@ -1,10 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const authWeb = require('../middleware/authWeb');
 const Reservation = require('../models/Reservation');
 const Catway = require('../models/Catway');
 
-// ➕ Créer une réservation
+// ✅ Formulaire de nouvelle réservation (interface web)
+router.get('/new', authWeb, async (req, res) => {
+  try {
+    const catways = await Catway.find({ isAvailable: true });
+    res.render('newReservation', { user: req.user, catways });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
+// ➕ Créer une réservation (API)
 router.post('/', auth, async (req, res) => {
   const { catwayId, date, duration } = req.body;
 
@@ -36,16 +48,14 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// 👤 Voir ses propres réservations
-router.get('/me', auth, async (req, res) => {
+// 👤 Voir ses propres réservations (interface web)
+router.get('/', authWeb, async (req, res) => {
   try {
-    const reservations = await Reservation.find({ user: req.user.userId })
-      .populate('catway');
-
-    res.json(reservations);
+    const reservations = await Reservation.find({ user: req.user.userId }).populate('catway');
+    res.render('reservations', { user: req.user, reservations });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Erreur serveur.' });
+    res.status(500).send('Erreur serveur');
   }
 });
 
@@ -55,7 +65,6 @@ router.delete('/:id', auth, async (req, res) => {
 
   try {
     const reservation = await Reservation.findById(reservationId);
-
     if (!reservation) {
       return res.status(404).json({ message: 'Réservation non trouvée.' });
     }

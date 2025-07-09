@@ -1,0 +1,15 @@
+<header>
+  <h1>🚤 Port de Plaisance Russell</h1>
+  <nav>
+    <a href="/">Accueil</a>
+    <% if (user) { %>
+      | <a href="/reservations">Mes réservations</a>
+      | <a href="/reservations/new">Nouvelle réservation</a>
+      | <a href="/logout">🚪 Déconnexion</a>
+    <% } else { %>
+      | <a href="/login">Connexion</a>
+      | <a href="/register">Inscription</a>
+    <% } %>
+  </nav>
+  <hr>
+</header>

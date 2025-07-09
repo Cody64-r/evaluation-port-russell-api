@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<h2>Catways disponibles</h2>
+
+<ul>
+  <% catways.forEach(c => { %>
+    <li><%= c.name %> – <%= c.location %></li>
+  <% }) %>
+</ul>
+
+<h3>Ajouter un catway</h3>
+<form action="/catways" method="POST">
+  <input type="text" name="name" placeholder="Nom">
+  <input type="text" name="location" placeholder="Emplacement">
+  <button type="submit">Ajouter</button>
+</form>
+
+<%- include('partials/footer') %>

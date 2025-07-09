@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<h2>Nouvelle réservation</h2>
+
+<% if (error) { %>
+  <p style="color:red;"><%= error %></p>
+<% } %>
+
+<form action="/reservations" method="POST">
+  <label for="catwayId">Catway :</label>
+  <select name="catwayId" required>
+    <% catways.forEach(c => { %>
+      <option value="<%= c._id %>"><%= c.name %> - <%= c.location %></option>
+    <% }) %>
+  </select><br><br>
+
+  <label for="date">Date :</label>
+  <input type="date" name="date" required><br><br>
+
+  <label for="duration">Durée (en jours) :</label>
+  <input type="number" name="duration" min="1" required><br><br>
+
+  <button type="submit">Réserver</button>
+</form>
+
+<p><a href="/reservations">← Retour à mes réservations</a></p>
